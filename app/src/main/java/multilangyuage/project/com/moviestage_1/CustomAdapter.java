@@ -22,13 +22,15 @@ import static multilangyuage.project.com.moviestage_1.NetworkUtils.TAG;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
 
+    final private ListItemClickListner listItemClickListner;
     private int mNumberofViews;
     List<URL> urls = new ArrayList<>();
     Context context;
 
-    public CustomAdapter(Context context, List<URL> url) {
+    public CustomAdapter(Context context, List<URL> url, ListItemClickListner listItemClickListner) {
         this.mNumberofViews = url.size();
         this.context = context;
+        this.listItemClickListner = listItemClickListner;
         urls = url;
     }
 
@@ -44,9 +46,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public void onBindViewHolder(CustomViewHolder holder, int position) {
         URL url = urls.get(position);
         Log.i(TAG, "onBindView " + url.toString());
-
         Picasso.with(context).load(url.toString()).into(holder.imageView);
-        //holder.imageView.setImageResource(R.drawable.movie512);
+
     }
 
     @Override
@@ -54,15 +55,25 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         return mNumberofViews;
     }
 
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
+    public interface ListItemClickListner {
+        public void onClick(int clickedPosition);
+    }
+
+    public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView imageView;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.listItem_ImageView);
+            imageView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            int itemClickedPosition = getAdapterPosition();
+            listItemClickListner.onClick(itemClickedPosition);
+        }
     }
 
 }

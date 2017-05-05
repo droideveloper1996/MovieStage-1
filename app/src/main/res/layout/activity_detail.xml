@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView    xmlns:android="http://schemas.android.com/apk/res/android"
+               xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f6f6f6"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+
+    android:orientation="vertical"
+    android:paddingTop="16dp"
+    tools:context="multilangyuage.project.com.moviestage_1.DetailActivity">
+
+    <RelativeLayout
+        android:id="@+id/detail_relative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/movie_poster"
+            android:layout_width="190dp"
+            android:layout_height="280dp"
+            android:layout_gravity="left"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/img"/>
+
+        <TextView
+            android:id="@+id/movie_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/movie_poster"
+            android:fontFamily="cursive"
+            android:textColor="#000"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            tools:text="Jurassic World"/>
+
+        <TextView
+            android:id="@+id/movie_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movie_name"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/movie_poster"
+            android:fontFamily="monospace"
+            android:textColor="#000"
+            tools:text="Rating :6/10 "/>
+
+        <TextView
+            android:id="@+id/movie_adult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movie_rating"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/movie_poster"
+            android:fontFamily="monospace"
+            tools:text="Adult"/>
+
+        <TextView
+            android:id="@+id/movie_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movie_adult"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/movie_poster"
+            android:fontFamily="monospace"
+            tools:text="English"/>
+
+        <TextView
+            android:id="@+id/vote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movie_language"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/movie_poster"
+            android:fontFamily="monospace"
+            tools:text="25/25"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/movie_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="casual"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="This is some Dummy text"/>
+
+</LinearLayout>
+</ScrollView>

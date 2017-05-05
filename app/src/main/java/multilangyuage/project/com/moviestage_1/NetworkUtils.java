@@ -27,7 +27,9 @@ public class NetworkUtils {
     public static final String TAG = "NetworkUtils.class";
     public static final String POPULAR_URL = "http://api.themoviedb.org/3/movie/popular?api_key=71a04d355457ca35979a23b0c4a30714";
     public static final String TOP_RATED_URL = "http://api.themoviedb.org/3/movie/top_rated?api_key=71a04d355457ca35979a23b0c4a30714";
-    public static final String imageBaseURL="https://image.tmdb.org/t/p/w500//";
+    public static final String imageBaseURL = "https://image.tmdb.org/t/p/w500//";
+    static List<Movie> list;
+
     public NetworkUtils() {
     }
 
@@ -96,7 +98,8 @@ public class NetworkUtils {
     private static ArrayList<URL> extractFeatureFromJson(String s) {
 
         Log.i(TAG, s);
-        ArrayList<URL> urlArrayList=new ArrayList<>();
+        ArrayList<URL> urlArrayList = new ArrayList<>();
+        list = new ArrayList<Movie>();
         try {
             JSONObject rootJsonObject = new JSONObject(s);
             JSONArray jsonArray = rootJsonObject.optJSONArray("results");
@@ -105,10 +108,10 @@ public class NetworkUtils {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.optJSONObject(i);
                 String pp = jsonObject.optString("poster_path");
-                String posterPath=pp.substring(1);
+                String posterPath = pp.substring(1);
                 String adult = jsonObject.optString("adult");
                 String overview = jsonObject.optString("overview");
-                String release = jsonObject.optString("overview");
+                String release = jsonObject.optString("release_date");
                 String original_title = jsonObject.getString("original_title");
                 String language = jsonObject.optString("original_language");
                 String title = jsonObject.getString("title");
@@ -123,9 +126,11 @@ public class NetworkUtils {
                         '\n' + language +
                         '\n' + title +
                         '\n' + vote);
-              URL url=imageURL(posterPath);
+                URL url = imageURL(posterPath);
                 urlArrayList.add(url);
+                Movie movie = new Movie(title, adult, overview, release, original_title, language, title, vote, populartity);
 
+                list.add(movie);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -133,23 +138,24 @@ public class NetworkUtils {
         return urlArrayList;
     }
 
-    public static  URL imageURL(String string) {
+    public static URL imageURL(String string) {
 
-        URL imageURL=null;
-        if (string != null){
-            Uri uri= Uri.parse(imageBaseURL).buildUpon()
+        URL imageURL = null;
+        if (string != null) {
+            Uri uri = Uri.parse(imageBaseURL).buildUpon()
                     .appendPath(string).build();
-            Log.i(TAG,"AppendedURL "+uri.toString());
+            Log.i(TAG, "AppendedURL " + uri.toString());
             try {
-                imageURL=new URL(uri.toString());
+                imageURL = new URL(uri.toString());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
         }
         return imageURL;
     }
+
     public static List<URL> fetchData(String requestUrl) {
-        Log.i("started","fetchBooksData()");
+        Log.i("started", "fetchBooksData()");
         URL url = makeUrl(requestUrl);
         String jsonResponse = null;
         try {
@@ -160,5 +166,11 @@ public class NetworkUtils {
         List<URL> urls = extractFeatureFromJson(jsonResponse);
         return urls;
     }
+
+    public static List<Movie> getMovieDetail() {
+
+        return list;
+    }
 }
+
 
