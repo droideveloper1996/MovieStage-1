@@ -8,9 +8,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f6f6f6"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
     android:orientation="vertical"
     android:paddingTop="16dp"
     tools:context="multilangyuage.project.com.moviestage_1.DetailActivity">
@@ -27,8 +26,8 @@
             android:layout_height="280dp"
             android:layout_gravity="left"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/img"/>
+            android:layout_marginTop="10dp"
+          />
 
         <TextView
             android:id="@+id/movie_name"
@@ -37,7 +36,7 @@
             android:layout_toRightOf="@id/movie_poster"
             android:fontFamily="cursive"
             android:textColor="#000"
-            android:textSize="48sp"
+            android:textSize="28sp"
             android:textStyle="bold"
             tools:text="Jurassic World"/>
 
@@ -58,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/movie_rating"
             android:layout_marginTop="15dp"
+            android:textSize="15dp"
             android:layout_toRightOf="@id/movie_poster"
             android:fontFamily="monospace"
             tools:text="Adult"/>
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="casual"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         tools:text="This is some Dummy text"/>
 

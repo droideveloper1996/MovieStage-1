@@ -70,14 +70,16 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(list);
             Log.i("List url", String.valueOf(list.get(0)));
             Context context = MainActivity.this;
-            urllist = list;
-            progressBar.setVisibility(View.INVISIBLE);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-            CustomAdapter adapter = new CustomAdapter(MainActivity.this, list, this);
-            int numberofColumn = 2;
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, numberofColumn);
-            recyclerView.setLayoutManager(gridLayoutManager);
-            recyclerView.setAdapter(adapter);
+            if (list != null) {
+                urllist = list;
+                progressBar.setVisibility(View.INVISIBLE);
+                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+                CustomAdapter adapter = new CustomAdapter(MainActivity.this, list, this);
+                int numberofColumn = 2;
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, numberofColumn);
+                recyclerView.setLayoutManager(gridLayoutManager);
+                recyclerView.setAdapter(adapter);
+            }
 
         }
 
@@ -94,19 +96,19 @@ public class MainActivity extends AppCompatActivity {
             }
             mToast = Toast.makeText(MainActivity.this, String.valueOf(clickedPosition), Toast.LENGTH_SHORT);
             //mToast.show();
-            List<Movie> movies=new ArrayList<>();
-            movies=NetworkUtils.getMovieDetail();
-            Log.i("Movie Detail",movies.get(clickedPosition).getmMovieTitle());
+            List<Movie> movies = new ArrayList<>();
+            movies = NetworkUtils.getMovieDetail();
+            Log.i("Movie Detail", movies.get(clickedPosition).getmMovieTitle());
             Intent i = new Intent(MainActivity.this, DetailActivity.class);
             i.putExtra("url", String.valueOf(urllist.get(clickedPosition)));
-            i.putExtra("title",String.valueOf(movies.get(clickedPosition).getmMovieTitle()));
-            i.putExtra("original_title",String.valueOf(movies.get(clickedPosition).getmOriginalTitle()));
-            i.putExtra("adult",String.valueOf(movies.get(clickedPosition).getmAdult()));
-            i.putExtra("release",String.valueOf(movies.get(clickedPosition).getMrelease()));
-            i.putExtra("popularity",String.valueOf(movies.get(clickedPosition).getmPopularity()));
-            i.putExtra("language",String.valueOf(movies.get(clickedPosition).getmLanguage()));
-            i.putExtra("overview",String.valueOf(movies.get(clickedPosition).getmOverview()));
-            i.putExtra("vote",String.valueOf(movies.get(clickedPosition).getmVote()));
+            i.putExtra("title", String.valueOf(movies.get(clickedPosition).getmMovieTitle()));
+            i.putExtra("original_title", String.valueOf(movies.get(clickedPosition).getmOriginalTitle()));
+            i.putExtra("adult", String.valueOf(movies.get(clickedPosition).getmAdult()));
+            i.putExtra("release", String.valueOf(movies.get(clickedPosition).getMrelease()));
+            i.putExtra("popularity", String.valueOf(movies.get(clickedPosition).getmPopularity()));
+            i.putExtra("language", String.valueOf(movies.get(clickedPosition).getmLanguage()));
+            i.putExtra("overview", String.valueOf(movies.get(clickedPosition).getmOverview()));
+            i.putExtra("vote", String.valueOf(movies.get(clickedPosition).getmVote()));
 
             startActivity(i);
 
@@ -127,9 +129,11 @@ public class MainActivity extends AppCompatActivity {
         FetchData task = new FetchData();
 
         switch (id) {
-            case R.id.action_popular:  task.execute(POPULAR_URL);
+            case R.id.action_popular:
+                task.execute(POPULAR_URL);
                 return true;
-            case R.id.action_top:  task.execute(TOP_RATED_URL);
+            case R.id.action_top:
+                task.execute(TOP_RATED_URL);
                 return true;
             default:
                 return true;
@@ -137,10 +141,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-        @Override
-        public boolean onCreateOptionsMenu (Menu menu){
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.sort_menu, menu);
-            return true;
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.sort_menu, menu);
+        return true;
     }
+}
