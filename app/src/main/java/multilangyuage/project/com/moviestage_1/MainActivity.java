@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, numberofColumn);
                 recyclerView.setLayoutManager(gridLayoutManager);
                 recyclerView.setAdapter(adapter);
+
             }
 
         }

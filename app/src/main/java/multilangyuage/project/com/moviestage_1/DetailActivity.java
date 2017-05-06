@@ -23,7 +23,7 @@ public class DetailActivity extends AppCompatActivity {
         TextView adult = (TextView) findViewById(R.id.movie_adult);
         TextView title = (TextView) findViewById(R.id.movie_name);
         TextView vote = (TextView) findViewById(R.id.vote);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent i = getIntent();
         if (i != null) {
