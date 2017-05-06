@@ -50,15 +50,19 @@ public class MainActivity extends AppCompatActivity {
 
 
         } else {
-            imageView = (ImageView) findViewById(R.id.imageView);
-            progressBar.setVisibility(View.INVISIBLE);
-            imageView.setImageResource(R.drawable.warning);
-            imageView.setVisibility(View.VISIBLE);
-            textView.setVisibility(View.VISIBLE);
+            setErrorMessage();
 
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
+
+    private void setErrorMessage() {
+        imageView = (ImageView) findViewById(R.id.imageView);
+        progressBar.setVisibility(View.INVISIBLE);
+        imageView.setImageResource(R.drawable.warning);
+        imageView.setVisibility(View.VISIBLE);
+        textView.setVisibility(View.VISIBLE);
     }
 
 
@@ -131,10 +135,18 @@ public class MainActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_popular:
-                task.execute(POPULAR_URL);
+                if (isOnline()) {
+                    task.execute(POPULAR_URL);
+                } else {
+                    setErrorMessage();
+                }
                 return true;
             case R.id.action_top:
-                task.execute(TOP_RATED_URL);
+                if (isOnline()) {
+                    task.execute(TOP_RATED_URL);
+                } else {
+                    setErrorMessage();
+                }
                 return true;
             default:
                 return true;
