@@ -28,6 +28,9 @@ public class NetworkUtils {
     public static final String POPULAR_URL = "http://api.themoviedb.org/3/movie/popular?api_key=71a04d355457ca35979a23b0c4a30714";
     public static final String TOP_RATED_URL = "http://api.themoviedb.org/3/movie/top_rated?api_key=71a04d355457ca35979a23b0c4a30714";
     public static final String imageBaseURL = "https://image.tmdb.org/t/p/w500//";
+
+    public static final String MOVIE_TRAILER = "http://api.themoviedb.org/3/movie/157336/videos?api_key=71a04d355457ca35979a23b0c4a30714";
+
     static List<Movie> list;
 
     public NetworkUtils() {
@@ -109,6 +112,7 @@ public class NetworkUtils {
                 JSONObject jsonObject = jsonArray.optJSONObject(i);
                 String pp = jsonObject.optString("poster_path");
                 String posterPath = pp.substring(1);
+                String id = jsonObject.optString("id");
                 String adult = jsonObject.optString("adult");
                 String overview = jsonObject.optString("overview");
                 String release = jsonObject.optString("release_date");
@@ -125,10 +129,11 @@ public class NetworkUtils {
                         '\n' + release +
                         '\n' + language +
                         '\n' + title +
+                        '\n' + id +
                         '\n' + vote);
                 URL url = imageURL(posterPath);
                 urlArrayList.add(url);
-                Movie movie = new Movie(title, adult, overview, release, original_title, language, title, vote, populartity);
+                Movie movie = new Movie(title, adult, overview, release, original_title, language, title, vote, populartity, id);
 
                 list.add(movie);
             }

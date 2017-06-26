@@ -10,12 +10,35 @@ public class Movie {
     private String mMovieTitle;
     private String mAdult;
     private String mOverview;
+    private String mId;
     private String mrelease;
     private String mOriginalTitle;
     private String mLanguage;
     private String mTitle;
     private String mVote;
     private String mPopularity;
+
+    public Movie(String mMovieTitle,
+                 String mAdult,
+                 String mOverview,
+                 String mrelease,
+                 String mOriginalTitle,
+                 String mLanguage,
+                 String mTitle,
+                 String mVote,
+                 String mPopularity,
+                 String mId) {
+        this.mMovieTitle = mMovieTitle;
+        this.mAdult = mAdult;
+        this.mOverview = mOverview;
+        this.mrelease = mrelease;
+        this.mOriginalTitle = mOriginalTitle;
+        this.mLanguage = mLanguage;
+        this.mTitle = mTitle;
+        this.mVote = mVote;
+        this.mPopularity = mPopularity;
+        this.mId = mId;
+    }
 
     public String getmMovieTitle() {
         return mMovieTitle;
@@ -39,6 +62,10 @@ public class Movie {
 
     public void setmOverview(String mOverview) {
         this.mOverview = mOverview;
+    }
+
+    public void setmId() {
+        this.mId = mId;
     }
 
     public String getMrelease() {
@@ -77,27 +104,6 @@ public class Movie {
         return mVote;
     }
 
-    public Movie(String mMovieTitle,
-                 String mAdult,
-                 String mOverview,
-                 String mrelease,
-                 String mOriginalTitle,
-                 String mLanguage,
-                 String mTitle,
-                 String mVote,
-                 String mPopularity)
-    {
-        this.mMovieTitle = mMovieTitle;
-        this.mAdult = mAdult;
-        this.mOverview = mOverview;
-        this.mrelease = mrelease;
-        this.mOriginalTitle = mOriginalTitle;
-        this.mLanguage = mLanguage;
-        this.mTitle = mTitle;
-        this.mVote = mVote;
-        this.mPopularity = mPopularity;
-    }
-
     public void setmVote(String mVote) {
         this.mVote = mVote;
 
@@ -109,5 +115,9 @@ public class Movie {
 
     public void setmPopularity(String mPopularity) {
         this.mPopularity = mPopularity;
+    }
+
+    public String getmId() {
+        return mId;
     }
 }
