@@ -176,6 +176,56 @@ public class NetworkUtils {
 
         return list;
     }
+
+
+    public static String makeHttpConnectionKey(URL url) throws IOException {
+        String jsonResonse = "";
+        InputStream inputStream = null;
+        HttpURLConnection httpURLConnection = null;
+        if (url == null) {
+            return jsonResonse;
+        } else {
+            try {
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("GET");
+                httpURLConnection.setReadTimeout(1000/*time in ms*/);
+                httpURLConnection.setConnectTimeout(1000/*time in ms*/);
+                httpURLConnection.connect();
+                if (httpURLConnection.getResponseCode() == 200) {
+                    inputStream = httpURLConnection.getInputStream();
+                    jsonResonse = decodeInputStreamKey(inputStream);
+                } else {
+                    Log.i(TAG, "Connection Error " + httpURLConnection.getResponseCode());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (httpURLConnection != null) {
+                    httpURLConnection.disconnect();
+                }
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            }
+        }
+        return jsonResonse;
+    }
+
+    private static String decodeInputStreamKey(InputStream inputStream) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        if (inputStream != null) {
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
+            BufferedReader reader = new BufferedReader(inputStreamReader);
+            String line = reader.readLine();
+            while (line != null) {
+                builder.append(line);
+                line = reader.readLine();
+            }
+        }
+        Log.i(TAG, builder.toString());
+
+        return builder.toString();
+    }
 }
 
 

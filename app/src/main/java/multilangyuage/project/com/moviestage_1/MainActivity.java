@@ -41,12 +41,14 @@ public class MainActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     private boolean loading = true;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
         textView = (TextView) findViewById(R.id.internet);
+
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         if (isOnline()) {
             FetchData task = new FetchData();
@@ -181,9 +183,11 @@ public class MainActivity extends AppCompatActivity {
             i.putExtra("language", String.valueOf(movies.get(clickedPosition).getmLanguage()));
             i.putExtra("overview", String.valueOf(movies.get(clickedPosition).getmOverview()));
             i.putExtra("vote", String.valueOf(movies.get(clickedPosition).getmVote()));
+            i.putExtra("id", String.valueOf(movies.get(clickedPosition).getmId()));
             startActivity(i);
 
         }
 
     }
+
 }
