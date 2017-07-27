@@ -1,6 +1,10 @@
 package multilangyuage.project.com.moviestage_1;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +24,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URL;
 
+import multilangyuage.project.com.moviestage_1.MovieContract.MovieEntry;
+
 public class DetailActivity extends AppCompatActivity {
 
     public static final String TAG = "DetailActivity.this";
@@ -30,6 +36,8 @@ public class DetailActivity extends AppCompatActivity {
     String key = "";
     String reviewId = "";
     ImageView mFavourite;
+    String cont = "";
+    String MOVIE_NME = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,7 @@ public class DetailActivity extends AppCompatActivity {
         Intent i = getIntent();
         id = i.getStringExtra("id");
         if (i != null) {
+
             if (i.hasExtra("url")) {
                 String url = i.getStringExtra("url");
                 Log.i(TAG, "URL " + url);
@@ -62,6 +71,7 @@ public class DetailActivity extends AppCompatActivity {
                 movieDetail.setText("Release  " + i.getStringExtra("release") + '\n' + i.getStringExtra("overview"));
                 vote.setText("Vote - " + i.getStringExtra("vote"));
                 adult.setText("Adult - " + i.getStringExtra("adult"));
+                MOVIE_NME = i.getStringExtra("title");
 
             }
 
@@ -95,6 +105,8 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mFavourite.setImageResource(R.drawable.ic_favorite_black_48px);
                 Toast.makeText(getApplicationContext(), "Added to Favourites", Toast.LENGTH_SHORT).show();
+
+
             }
         });
 
@@ -108,7 +120,57 @@ public class DetailActivity extends AppCompatActivity {
 
     public void getReview(String url) {
         URL review_url = NetworkUtils.makeUrl(url);
-        new Trailer().execute("http://api.themoviedb.org/3/movie/83542/reviews?api_key=71a04d355457ca35979a23b0c4a30714");
+        new Trailer().execute(review_url.toString());
+    }
+
+    public void addToFavourite(String review) {
+
+
+        ContentResolver contentResolver = getContentResolver();
+        ContentValues contentValues = new ContentValues();
+
+
+        contentValues.put(MovieEntry.MOVIE_ID, id);
+        contentValues.put(MovieEntry.MOVIE_NAME, MOVIE_NME);
+        contentValues.put(MovieEntry.MOVIE_FAV, "1");
+        contentValues.put(MovieEntry.MOVIE_REVIEW_URL, REVIEW_URL);
+        contentValues.put(MovieEntry.MOVIE_REVIEW, review);
+
+
+        Uri uri = contentResolver.insert(MovieEntry.CONTENT_URI, contentValues);
+
+        if (uri != null) {
+            Toast.makeText(DetailActivity.this, uri.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+
+        getResult();
+
+    }
+
+    public void getResult() {
+        Cursor cursor = null;
+        ContentResolver contentResolver = getContentResolver();
+        cursor = contentResolver.query(MovieEntry.CONTENT_URI, null, null, null, null);
+        if (cursor != null && cursor.getCount() != 0) {
+            while (cursor.moveToNext()) {
+                int movie_name = cursor.getColumnIndex(MovieEntry.MOVIE_NAME);
+                int movie_id = cursor.getColumnIndex(MovieEntry.MOVIE_ID);
+                int movie_url = cursor.getColumnIndex(MovieEntry.MOVIE_REVIEW_URL);
+                int movie_review = cursor.getColumnIndex(MovieEntry.MOVIE_REVIEW);
+                int mov_fav = cursor.getColumnIndex(MovieEntry.MOVIE_FAV);
+
+
+                Log.i("Movie Details",
+
+                        cursor.getString(movie_name) + "      " +
+                                cursor.getString(movie_id) + "        " +
+                                cursor.getString(movie_url) + "       " +
+                                cursor.getString(movie_review) + "        " +
+                                cursor.getString(mov_fav)
+                );
+            }
+        }
     }
 
     public class Trailer extends AsyncTask<String, Void, String> {
@@ -143,15 +205,18 @@ public class DetailActivity extends AppCompatActivity {
                         JSONObject object = jsonArray.getJSONObject(i);
                         key = object.optString("key");
                         reviewId = object.optString("id");
-                        System.out.println(key);
-                        System.out.println(reviewId);
+                        cont += object.optString("content");
+
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
             }
+            addToFavourite(cont);
         }
     }
+
 
 }

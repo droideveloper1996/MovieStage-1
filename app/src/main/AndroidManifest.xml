@@ -32,6 +32,11 @@
             android:name=".YoutubePlayerActivity"
             android:configChanges="keyboardHidden|keyboard|orientation">
         </activity>
+
+        <provider
+            android:name=".MovieProvider"
+            android:authorities="multilangyuage.project.com.moviestage"
+            android:exported="false"/>
     </application>
 
 </manifest>
